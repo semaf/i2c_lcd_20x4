@@ -1,0 +1,46 @@
+anleitungen um i2c LCD displays auf dem raspi zu betreiben
+
+
+haubtanleitung befindet sich hier
+http://think-bowl.com/raspberry-pi/how-to-configure-i2c-on-raspbian-wheezy/
+
+
+mein vorgehen
+
+1. raspbian updaten
+2. i2c treiber laden
+    in /etc/modprobe.d/raspi-blacklist.conf comment
+        #blacklist i2c-bcm2708
+    in /etc/modules add
+        i2c-bcm2708
+        i2c-dev
+    sudo modprobe i2c-bcm2708
+    sudo modprobe i2c-dev
+3. i2c tools installieren
+    sudo install python-smbus i2c-tools
+6. testen ob display erkannt wird
+    sudo i2cdetect -y 1
+    muss an einer adressen ein gerät anzeigen
+    hat bisher immer geklapt
+
+    0x20 ist das adafruit 2 zeilige display welches auch mit open EVSE mitkam
+    0x27 kam beim 4 zeiligen von fasttech
+
+7. RPi.GPIO installieren
+    sudo apt-get install python-dev python-rpi.gpio
+    referenz: https://pypi.python.org/pypi/RPi.GPIO
+    
+8. rechte für nicht root auf i2c devices
+    sudo vi /etc/udev/rules.d/99-i2c.rules and add
+    SUBSYSTEM=="i2c-dev", MODE="0666"
+    
+Anleitung für das 20x4 display
+    http://www.recantha.co.uk/blog/?p=4849
+    
+Anleitung für das 16x2 display vom openEVSE
+    http://learn.adafruit.com/adafruit-16x2-character-lcd-plus-keypad-for-raspberry-pi/usage
+    
+Think-bowl i2c display library, sollte für verschiedene displays gehen
+    referenz: http://think-bowl.com/raspberry-pi/i2c-python-library-lcd-with-the-raspberry-pi/
+    
+
