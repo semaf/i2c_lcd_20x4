@@ -9,22 +9,22 @@ mein vorgehen
 
 1. raspbian updaten
 2. i2c treiber laden
-    in /etc/modprobe.d/raspi-blacklist.conf comment
+    in sudo vi /etc/modprobe.d/raspi-blacklist.conf comment
         #blacklist i2c-bcm2708
-    in /etc/modules add
+    in sudo vi /etc/modules add
         i2c-bcm2708
         i2c-dev
     sudo modprobe i2c-bcm2708
     sudo modprobe i2c-dev
 3. i2c tools installieren
-    sudo install python-smbus i2c-tools
+    sudo apt-get install python-smbus i2c-tools
 6. testen ob display erkannt wird
     sudo i2cdetect -y 1
     muss an einer adressen ein gerät anzeigen
     hat bisher immer geklapt
 
     0x20 ist das adafruit 2 zeilige display welches auch mit open EVSE mitkam
-    0x27 kam beim 4 zeiligen von fasttech
+    0x27 kam beim 2 und 4 zeiligen von fasttech (die mit dem i2 printli hinten am display)
 
 7. RPi.GPIO installieren
     sudo apt-get install python-dev python-rpi.gpio
